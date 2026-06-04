@@ -12,6 +12,7 @@ import (
 
 	"github.com/haramurti/-PAW-nutrifood-health-grab-clone/config"
 	"github.com/haramurti/-PAW-nutrifood-health-grab-clone/internal/app/ai"
+	"github.com/haramurti/-PAW-nutrifood-health-grab-clone/internal/app/middleware"
 	"github.com/haramurti/-PAW-nutrifood-health-grab-clone/internal/app/product/entity"
 	"github.com/haramurti/-PAW-nutrifood-health-grab-clone/internal/app/product/handler"
 	"github.com/haramurti/-PAW-nutrifood-health-grab-clone/internal/app/product/repository"
@@ -48,7 +49,7 @@ func main() {
 
 	app.Use(cors.New(cors.Config{
 		AllowOrigins: "*",
-		AllowHeaders: "Origin, Content-Type, Accept",
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 	}))
 	app.Use(logger.New())
 
@@ -66,6 +67,7 @@ func main() {
 
 	// ── Routes ────────────────────────────────────────────────────────────────
 	api := app.Group("/api")
+	api.Use(middleware.JWTProtected()) // ← tambah baris ini
 	productHandler.RegisterRoutes(api.Group("/product"))
 	uploadHandler.RegisterRoutes(api.Group("/upload"))
 

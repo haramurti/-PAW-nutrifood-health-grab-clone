@@ -8,18 +8,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { generateIngredient, getDetailProduct, uploadImage } from "../redux/slices/productSlice";
 
 function CreateProductPage() {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { state } = useLocation();
   const { url } = useSelector((state) => state.productSlice);
-  const { role } = useSelector(state => state.loginSlice);
+  const { role, token } = useSelector(state => state.loginSlice);
 
   useEffect(() => {
-    if (!role) {
+    if (!role || !token) {
       navigate("/");
-    };
-  }, []);
+    }
+  }, [role, token, navigate]);
 
   const checkProduct = state ? Object.keys(state).length !== 0 : false;
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -60,7 +60,7 @@ function CreateProductPage() {
       state.description = input.description;
       state.image = url;
 
-      navigation("/products/create/nutrition", { state: state });
+      navigate("/products/create/nutrition", { state: state });
     } else {
       setIsSubmitting(true);
       dispatch(generateIngredient(input.name)).then(() => {
@@ -69,12 +69,12 @@ function CreateProductPage() {
       
       input.image = url;
       input.price = parseInt(String(input.price).replace(/\./g, ''));
-      navigation("/products/create/nutrition", { state: input });
+      navigate("/products/create/nutrition", { state: input });
     }
   };
 
   return (
-    <div className="relative h-full">
+    <div className="max-w-md min-h-screen mx-auto bg-white shadow-xl relative pb-20">
       <Navbar header={"Create Product"}></Navbar>
 
       <div className="mb-6">

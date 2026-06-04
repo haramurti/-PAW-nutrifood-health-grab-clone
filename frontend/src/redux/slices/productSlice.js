@@ -32,11 +32,15 @@ const productSlice = createSlice({
 
 export const { setAllProducts, setDetailProduct, setImageUrl, setIngredient, setMessage } = productSlice.actions;
 
-export const getAllProducts = (search = '') => async (dispatch) => {
+export const getAllProducts = (search = '') => async (dispatch, getState) => {
   try {
+    const token = getState().loginSlice.token;
     const { data: { data } } = await axios({
       method: 'get',
       url: `http://localhost:8000/api/product?search=${search}`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       responseType: 'json'
     });
 
@@ -53,11 +57,15 @@ export const getAllProducts = (search = '') => async (dispatch) => {
   };
 };
 
-export const getDetailProduct = (id) => async (dispatch) => {
+export const getDetailProduct = (id) => async (dispatch, getState) => {
   try {
+    const token = getState().loginSlice.token;
     const { data: { data } } = await axios({
       method: 'get',
       url: `http://localhost:8000/api/product/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       responseType: 'json'
     });
 
@@ -67,14 +75,18 @@ export const getDetailProduct = (id) => async (dispatch) => {
   };
 };
 
-export const uploadImage = (image) => async (dispatch) => {
+export const uploadImage = (image) => async (dispatch, getState) => {
   try {
+    const token = getState().loginSlice.token;
     const formData = new FormData();
     formData.append('image', image);
     const { data: { data: { url } } } = await axios({
       method: 'post',
       url: `http://localhost:8000/api/upload`,
       data: formData,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       responseType: 'json'
     });
 
@@ -84,12 +96,16 @@ export const uploadImage = (image) => async (dispatch) => {
   };
 };
 
-export const generateIngredient = (name) => async (dispatch) => {
+export const generateIngredient = (name) => async (dispatch, getState) => {
   try {
+    const token = getState().loginSlice.token;
     const { data: { data } } = await axios({
       method: 'post',
       url: `http://localhost:8000/api/product/generate/ingredient-nutriscore`,
       data: { name },
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       responseType: 'json'
     });
 
@@ -100,12 +116,16 @@ export const generateIngredient = (name) => async (dispatch) => {
   };
 };
 
-export const createProduct = (product) => async (dispatch) => {
+export const createProduct = (product) => async (dispatch, getState) => {
   try {
+    const token = getState().loginSlice.token;
     const { data: { message } } = await axios({
       method: 'post',
       url: `http://localhost:8000/api/product`,
       data: product,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       responseType: 'json'
     });
 
@@ -115,14 +135,18 @@ export const createProduct = (product) => async (dispatch) => {
   };
 };
 
-export const generateNutrition = (type, ingredient) => async (dispatch) => {
+export const generateNutrition = (type, ingredient) => async (dispatch, getState) => {
   try {
+    const token = getState().loginSlice.token;
     const { data: { data } } = await axios({
       method: 'post',
       url: `http://localhost:8000/api/product/generate/nutriscore`,
       data: {
         type,
         ingredients: ingredient
+      },
+      headers: {
+        Authorization: `Bearer ${token}`
       },
       responseType: 'json'
     });
@@ -133,12 +157,16 @@ export const generateNutrition = (type, ingredient) => async (dispatch) => {
   };
 };
 
-export const updateProduct = (product) => async (dispatch) => {
+export const updateProduct = (product) => async (dispatch, getState) => {
   try {
+    const token = getState().loginSlice.token;
     const { data: { message } } = await axios({
       method: 'put',
       url: `http://localhost:8000/api/product/${product.id}`,
       data: product,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
       responseType: 'json'
     });
 

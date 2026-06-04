@@ -13,25 +13,25 @@ function ListProductPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { role } = useSelector((state) => state.loginSlice);
+  const { role, token } = useSelector((state) => state.loginSlice);
   const { products } = useSelector((state) => state.productSlice);
 
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState('');
 
   useEffect(() => {
-    if (!role) {
+    if (!role || !token) {
       navigate("/");
     } else {
       dispatch(getAllProducts());
     }
-  }, []);
+  }, [role, token, navigate, dispatch]);
 
   return (
-    <div className="relative h-full">
-      <Navbar header={"List Product"}></Navbar>
+    <div className="max-w-md min-h-screen mx-auto bg-white shadow-xl relative pb-8">
+      <Navbar header={"List Product"} showBack={false}></Navbar>
 
-      <div className="h-[90%] overflow-y-auto">
+      <div className="overflow-y-auto pb-16">
         <SearchBar></SearchBar>
 
         {products.map((v, i) => (

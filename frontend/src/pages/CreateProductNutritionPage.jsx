@@ -13,26 +13,29 @@ function CreateProductNutritionPage() {
 
   const { state } = useLocation();
   const { ingredient, message } = useSelector((state) => state.productSlice);
-  const { role } = useSelector(state => state.loginSlice);
+  const { role, token } = useSelector((state) => state.loginSlice);
 
   const [data, setData] = useState({});
   const [ingredients, setIngredients] = useState([]);
   const [isRegenerating, setIsRegenerating] = useState(false);
 
   useEffect(() => {
-    if (!role) {
+    if (!role || !token) {
       navigate("/");
-    } else {
+    }
+  }, [role, token, navigate]);
+
+  useEffect(() => {
+    if (role && token) {
       setData(ingredient);
       setIngredients(ingredient.ingredients);
       
-      if (Object.hasOwn(state, "ingredients")) {
+      if (state && Object.hasOwn(state, "ingredients")) {
         setData(state);
         setIngredients(state.ingredients);
-      };
-      console.log("helo", data, ingredient, state, ingredients)
-    };
-  }, [ingredient]);
+      }
+    }
+  }, [ingredient, role, token, state]);
 
   useEffect(() => {
     if (message === 'success generate nutrition') {
@@ -68,7 +71,7 @@ function CreateProductNutritionPage() {
   };
 
   return (
-    <div className="relative h-full">
+    <div className="max-w-md min-h-screen mx-auto bg-white shadow-xl relative pb-20">
       {Object.keys(data).length !== 0 ? (
         <div className="relative h-full">
           <Navbar header={"Create Product - Nutri-Score"}></Navbar>

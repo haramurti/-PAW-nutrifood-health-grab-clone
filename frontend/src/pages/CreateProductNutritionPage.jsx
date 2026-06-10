@@ -71,12 +71,13 @@ function CreateProductNutritionPage() {
   };
 
   return (
-    <div className="max-w-md min-h-screen mx-auto bg-white shadow-xl relative pb-20">
+    <div className="max-w-md min-h-screen mx-auto bg-white shadow-xl flex flex-col">
       {Object.keys(data).length !== 0 ? (
-        <div className="relative h-full">
+        <>
           <Navbar header={"Create Product - Nutri-Score"}></Navbar>
           {console.log("MASUK", data)}
-          <div className="mb-6 max-h-[80%] overflow-y-auto">
+          {/* Scrollable content area */}
+          <div className="flex-1 overflow-y-auto pb-4">
             <div className="input-group-uniq">
               <label htmlFor="name" className="product-label-uniq">
                 Product Name
@@ -107,7 +108,7 @@ function CreateProductNutritionPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-0 w-full text-sm bg-white">
+          <div className="sticky bottom-0 w-full text-sm bg-white border-t border-gray-100">
             <div className="flex gap-3 pt-3 pb-5 mx-4">
               <button
                 className={`bg-white grow outline outline-1 outline-[var(--secondary)] rounded py-2 ${isRegenerating ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -124,16 +125,18 @@ function CreateProductNutritionPage() {
               </button>
             </div>
           </div>
-        </div>
+        </>
       ) : message === 'error' ? (
-        <div className="flex flex-col items-center justify-center h-full pt-20">
-          <h1 className="text-red-500 font-bold text-xl mb-4">Gagal Memproses Data</h1>
-          <p className="text-gray-600 mb-6">Terjadi kesalahan saat memproses data. Silakan coba lagi.</p>
+        <div className="flex flex-col items-center justify-center h-full pt-20 px-8 text-center">
+          <div className="text-5xl mb-4">🤖</div>
+          <h1 className="text-red-500 font-bold text-xl mb-2">AI Sedang Sibuk</h1>
+          <p className="text-gray-500 text-sm mb-1">Server Gemini AI sedang mengalami lonjakan permintaan.</p>
+          <p className="text-gray-400 text-xs mb-6">Ini bukan kesalahan aplikasi — coba beberapa saat lagi.</p>
           <button 
             onClick={() => navigate(-1)}
-            className="bg-[var(--primary)] text-white px-6 py-2 rounded-lg hover:bg-opacity-90"
+            className="bg-[var(--primary)] text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:opacity-90 active:scale-95 transition-all"
           >
-            Kembali & Coba Lagi
+            ← Kembali & Coba Lagi
           </button>
         </div>
       ) : (

@@ -100,6 +100,7 @@ export const uploadImage = (image) => async (dispatch, getState) => {
 export const generateIngredient = (name) => async (dispatch, getState) => {
   try {
     const token = getState().loginSlice.token;
+    console.log('[generateIngredient] token:', token ? token.substring(0,20)+'...' : 'KOSONG!');
     const { data: { data } } = await axios({
       method: 'post',
       url: `http://localhost:8000/api/product/generate/ingredient-nutriscore`,
@@ -110,9 +111,10 @@ export const generateIngredient = (name) => async (dispatch, getState) => {
       responseType: 'json'
     });
 
-    console.log(data);
+    console.log('[generateIngredient] success:', data);
     return dispatch(setIngredient({ data, message: 'success generate ingredient' }));
   } catch (err) {
+    console.error('[generateIngredient] ERROR:', err?.response?.status, err?.response?.data || err?.message);
     return dispatch(setIngredient({ data: {}, message: 'error' }));
   };
 };

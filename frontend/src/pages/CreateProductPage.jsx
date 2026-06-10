@@ -50,7 +50,7 @@ function CreateProductPage() {
     }));
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     
     if (Object.values(input).includes("")) {
@@ -63,12 +63,12 @@ function CreateProductPage() {
       navigate("/products/create/nutrition", { state: state });
     } else {
       setIsSubmitting(true);
-      dispatch(generateIngredient(input.name)).then(() => {
-        setIsSubmitting(false);
-      });
-      
       input.image = url;
       input.price = parseInt(String(input.price).replace(/\./g, ''));
+
+      // Tunggu Gemini selesai generate dulu, baru pindah halaman
+      await dispatch(generateIngredient(input.name));
+      setIsSubmitting(false);
       navigate("/products/create/nutrition", { state: input });
     }
   };

@@ -47,8 +47,9 @@ export const getAllProducts = (search = '') => async (dispatch, getState) => {
     data.forEach(v => {
       v.price = Intl.NumberFormat("id-ID", {
         style: "currency",
-        currency: "IDR"
-      }).format(v.price).slice(0, -3);
+        currency: "IDR",
+        maximumFractionDigits: 0
+      }).format(v.price);
     });
 
     return dispatch(setAllProducts(data));

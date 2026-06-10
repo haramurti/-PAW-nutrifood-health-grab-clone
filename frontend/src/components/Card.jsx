@@ -24,6 +24,10 @@ function Card({ product, setIsOpen, setId }) {
         <img
           src={product.image}
           alt="product-img"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200&auto=format&fit=crop&q=80";
+          }}
           className="object-cover w-28 h-28 rounded-l-md"
         />
       </div>

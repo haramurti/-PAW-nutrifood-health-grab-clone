@@ -235,7 +235,7 @@ function LoginPage() {
       </div>
 
       {/* Footer */}
-      <p className="login-footer">by Newbiers</p>
+      <p className="login-footer">by Paper Rex</p>
     </div>
   );
 }

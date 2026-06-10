@@ -44,7 +44,11 @@
 .login-title {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--secondary);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
   letter-spacing: -0.02em;
 }
 
@@ -191,13 +195,14 @@
 }
 
 .login-submit-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 132, 57, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 132, 57, 0.4);
+  background: linear-gradient(135deg, #009944, #006644);
 }
 
 .login-submit-btn:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0, 132, 57, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 132, 57, 0.2);
 }
 
 /* ── Register Link ── */

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller
 {
@@ -67,13 +68,23 @@ class AuthController extends Controller
 
         $user = JWTAuth::user();
 
+        // Set session
+        session([
+            'loggedin'  => true,
+            'username'  => $user->name,
+            'user_id'   => $user->id,
+        ]);
+
+        // Set cookie role (berlaku 1 hari)
+        $cookie = Cookie::make('user_role', $request->input('role', 'customer'), 60 * 24);
+
         return response()->json([
             'message' => 'success',
             'data'    => [
                 'user'  => $user,
                 'token' => $token,
             ],
-        ]);
+        ])->withCookie($cookie);
     }
 
     // ── Logout ────────────────────────────────────────────────────────────────
@@ -89,8 +100,30 @@ class AuthController extends Controller
             ], 500);
         }
 
+        // Clear session dan hapus cookie
+        session()->flush();
+
         return response()->json([
             'message' => 'success',
+        ])->withCookie(Cookie::forget('user_role'));
+    }
+
+    // ── Session & Cookie check ────────────────────────────────────────────────
+
+    public function sessionCheck(Request $request): JsonResponse
+    {
+        return response()->json([
+            'message' => 'success',
+            'data'    => [
+                'session' => [
+                    'loggedin' => session('loggedin', false),
+                    'username' => session('username', null),
+                    'user_id'  => session('user_id', null),
+                ],
+                'cookie' => [
+                    'user_role' => $request->cookie('user_role', null),
+                ],
+            ],
         ]);
     }
 

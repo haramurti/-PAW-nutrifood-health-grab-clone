@@ -89,15 +89,9 @@ function LoginPage() {
 
   return (
     <div className="login-page">
-      {/* Logo Section */}
       <div className="login-logo-section">
-        <div className="login-logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c1.85 0 3.58-.5 5.07-1.38l-1.45-1.73C14.44 19.59 13.26 20 12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8c3.18 0 5.93 1.87 7.21 4.56L21.5 7.5C19.79 4.25 16.16 2 12 2z" fill="white"/>
-            <path d="M17 8c-1.5 0-3.5 1.5-4 3-.5-1.5-2.5-3-4-3-2.5 0-4 2-4 4.5S8 17 12 20c4-3 7-5 7-7.5S19.5 8 17 8z" fill="white" opacity="0.8"/>
-            <path d="M15 3c0 0 1 2 1 4s-1 3-1 3" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-            <path d="M18 4c0 0 1 1.5 1 3s-1 2.5-1 2.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" opacity="0.7"/>
-          </svg>
+        <div className="mb-3">
+          <img src="/custom-logo.png" alt="Logo" className="w-16 h-16 mx-auto rounded-2xl shadow-md object-cover" />
         </div>
         <h1 className="login-title">Healthy</h1>
         <p className="login-subtitle">Your Nutrition Partner</p>
